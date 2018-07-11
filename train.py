@@ -6,7 +6,7 @@ import os
 import time
 import datetime
 import data_helpers
-from text_cnn import TextCNN
+from text_cnn_cq import TextCNN
 from tensorflow.contrib import learn
 
 # Parameters
