@@ -6,8 +6,11 @@ import os
 import time
 import datetime
 import data_helpers
-from text_cnn_cq import TextCNN
+from text_cnn_cq_3 import TextCNN
 from tensorflow.contrib import learn
+import json
+
+from tensorflow.python.framework import graph_util
 
 # Parameters
 # ==================================================
@@ -26,7 +29,7 @@ tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda (default: 
 
 # Training parameters
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
-tf.flags.DEFINE_integer("num_epochs", 200, "Number of training epochs (default: 200)")
+tf.flags.DEFINE_integer("num_epochs", 100, "Number of training epochs (default: 200)")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps (default: 100)")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps (default: 100)")
 tf.flags.DEFINE_integer("num_checkpoints", 5, "Number of checkpoints to store (default: 5)")
@@ -41,6 +44,23 @@ FLAGS = tf.flags.FLAGS
 #     print("{}={}".format(attr.upper(), value))
 # print("")
 
+#%%
+
+def save_to_pb(sess):
+    output_node_names = "output/scores,output/predictions"
+
+    # We have to convert all variables to constants for easy use in other languages,
+    # in this case no additional ./variables folder will be created
+    # all data will be stored in a single .pb file
+    output_graph_def = graph_util.convert_variables_to_constants(
+        sess,                                               # We need to pass session object, it contains all variables
+        tf.get_default_graph().as_graph_def(),              # also graph definition is necessary
+        output_node_names.split(",")                        # we may use multiple nodes for output
+    )
+    model_file = "./saved_model.pb"
+    with tf.gfile.GFile(model_file, "wb") as f:
+        f.write(output_graph_def.SerializeToString())
+
 def preprocess():
     # Data Preparation
     # ==================================================
@@ -53,6 +73,8 @@ def preprocess():
     max_document_length = max([len(x.split(" ")) for x in x_text])
     vocab_processor = learn.preprocessing.VocabularyProcessor(max_document_length)
     x = np.array(list(vocab_processor.fit_transform(x_text)))
+    with open("word_2_indice.json",'w') as fp:
+        json.dump(vocab_processor.vocabulary_._mapping, fp)
 
     # Randomly shuffle data
     np.random.seed(10)
@@ -71,14 +93,16 @@ def preprocess():
     print("Vocabulary Size: {:d}".format(len(vocab_processor.vocabulary_)))
     print("Train/Dev split: {:d}/{:d}".format(len(y_train), len(y_dev)))
     return x_train, y_train, vocab_processor, x_dev, y_dev
-
+#%%
 def train(x_train, y_train, vocab_processor, x_dev, y_dev):
     # Training
     # ==================================================
 
+    # why we need this, graph.as default
+    # why we need tf graph as default?
     with tf.Graph().as_default():
         session_conf = tf.ConfigProto(
-          allow_soft_placement=FLAGS.allow_soft_placement,
+          allow_soft_placement=FLAGS.allow_soft_placement, # what does allow soft palcement mean in python tf?
           log_device_placement=FLAGS.log_device_placement)
         sess = tf.Session(config=session_conf)
         with sess.as_default():
@@ -96,6 +120,7 @@ def train(x_train, y_train, vocab_processor, x_dev, y_dev):
             optimizer = tf.train.AdamOptimizer(1e-3)
             grads_and_vars = optimizer.compute_gradients(cnn.loss)
             train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step)
+            # what is global steop in tf?
 
             # Keep track of gradient values and sparsity (optional)
             grad_summaries = []
@@ -187,7 +212,7 @@ def train(x_train, y_train, vocab_processor, x_dev, y_dev):
                 if current_step % FLAGS.checkpoint_every == 0:
                     path = saver.save(sess, checkpoint_prefix, global_step=current_step)
                     print("Saved model checkpoint to {}\n".format(path))
-
+            save_to_pb(sess)
 def main(argv=None):
     x_train, y_train, vocab_processor, x_dev, y_dev = preprocess()
     train(x_train, y_train, vocab_processor, x_dev, y_dev)

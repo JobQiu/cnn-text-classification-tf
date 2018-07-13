@@ -20,12 +20,13 @@ class TextCNN(object):
         l2_loss = tf.constant(0.0)
 
         # Embedding layer
-        with tf.device('/cpu:0'), tf.name_scope("embedding"):
+        with igtf.name_scope("embedding"):
             self.W = tf.Variable(
                 tf.random_uniform([vocab_size, embedding_size], -1.0, 1.0),
                 name="W")
             self.embedded_chars = tf.nn.embedding_lookup(self.W, self.input_x)
             self.embedded_chars_expanded = tf.expand_dims(self.embedded_chars, -1)
+            # the reason why they do expand is because so that they can use the tf nn conv2d, it correspond to channle
 
         # Create a convolution + maxpool layer for each filter size
         pooled_outputs = []
@@ -56,6 +57,8 @@ class TextCNN(object):
         num_filters_total = num_filters * len(filter_sizes)
         self.h_pool = tf.concat(pooled_outputs, 3)
         self.h_pool_flat = tf.reshape(self.h_pool, [-1, num_filters_total])
+        # how to check the 
+        # how to check the shape in tensorflow?
 
         # Add dropout
         with tf.name_scope("dropout"):
@@ -80,5 +83,5 @@ class TextCNN(object):
 
         # Accuracy
         with tf.name_scope("accuracy"):
-            correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
+            rc = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
             self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")

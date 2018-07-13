@@ -33,7 +33,7 @@ class TextCNN(object):
         l2_loss = tf.Variable(tf.constant( 0.0 ))
         
         # Embedding layer
-        with tf.name_scope("embedding"), tf.device("/cpu:0"): 
+        with tf.name_scope("embedding")n
             def loadGloVe(filename):
                 vocab = []
                 embd = []
