@@ -20,28 +20,14 @@ def penn2morphy(penntag):
         return morphy_tag[penntag[:2]]
     except:
         return 'n' 
-import enchant
-d = enchant.Dict("en_US")
+    
 def lemmatize_sent(text): 
     # Text input is string, returns lowercased strings.
     temp = [wnl.lemmatize(word.lower(), pos=penn2morphy(tag)) 
             for word, tag in pos_tag(word_tokenize(text))]
-    result_ = ""
-    for w in temp:
-        isWord = d.check(w)
-        #print(isWord)
-        #print(w)
-        if isWord:
-            result_ = result_+" "+(w)
-        else:
-            tt = d.suggest(w)
-            if len(tt)>1:
-                result_ = result_+" "+(tt[0])
-            else:
-                result_ = result_+" <UNK>"
-    return result_
+    return " ".join(word for word in temp)
 
-#lemmatize_sent('He is walking to school')
+lemmatize_sent('He is walking to school')
 #%%
 
 import numpy as np
@@ -112,4 +98,4 @@ def batch_iter(data, batch_size, num_epochs, shuffle=True):
 
 #%%
             
-#x_text, y = load_data_and_labels("./data/rt-polaritydata/rt-polarity.pos","./data/rt-polaritydata/rt-polarity.neg")
+x_text, y = load_data_and_labels("./data/rt-polaritydata/rt-polarity.pos","./data/rt-polaritydata/rt-polarity.neg")

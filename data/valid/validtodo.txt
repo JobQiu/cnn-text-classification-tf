@@ -1,0 +1,96 @@
+finish the tod send part
+send sync request in xcode
+delete files  when senafter send todo and questions
+keep only one makeithappen alive
+only keep for example 500 questions and todos every user
+the api to pass, refresh and done tasks
+time count in make it happen
+so i think you still need to build a better mac app to make it more convient, for example, i think it's not convient to let people have to open the webstie to manage them
+take the nlp course2
+finish the api of peacock
+invoke those action from mac app
+improve your speaking and prepare a slide for your product
+start at login
+deal with the arrow
+a short to record the selected sentence as problem or todo
+screenshot is still very useful i think
+show the focus window in each desktop
+talk more with hei pangzi with the front end
+finish the hooked book chapter 1 and 2, and take notes
+read the word2vec paper
+ock the phone and show them the todos and problems
+add a new choice idea
+add tags function
+deal with the situation when content are in two blocks
+answer a question for other users
+test the chinese question symble
+read kaggle kernel and raise as many problems as possible
+input the questions or todo right from the my commitment
+remove the pass choice and add a list to choose from
+read the word2vec paper again
+click a button and show a window
+start to do study about nlp
+time zone is a huge problem
+login the dingding again, you need the stuff
+find the replacement of dingding robot
+What is bidirectional LSTM?update for the frequency part
+run the keras tutorials
+take the course 3 and raise as many problems as possible
+eda of quora question pair.
+start to build a repo to run all the code you can find and understand them
+realize the kernel of anokas's
+run jupyter notebook of his and find more toolkit as you can
+write an example of tfidf
+run the toxic kernel
+stop the timer when system sleep
+read speech and language processing chapter 5
+??, when you think a task is too difficult for u, find some basis that you can at least try to prepare for it.
+read the chapter 5 of slp
+finish the my commitment part
+using a post to send all these sentences together
+support for tags
+fix sentence is imcomplete
+finish slp chapter 5.2
+start thr chapter 6
+a choise to show the most recent todos
+find an example of LSTM.
+read chapter 10 of deep learning
+throw a problems to public
+find an example of LSTM
+read the min char rnn py
+read the char blog by karpathy
+finish the sort part
+change the valid score async
+finish a slider for the valid threshold
+collect those deleted todos and problem, and use them to train a classifier
+a page to show the detail of the task
+collect data about the valid of tasks
+split page in mysql layer
+throw problems to a certain friend
+throw problems to public
+recommend problems and users as friends
+train the model in one place, maybe using python and load the weights to use it in java
+with google facebook and so on
+finish the article to advertise my stuff
+set valid to 0 will not appear on the website
+pin tasks into next 7 days and will disappear until that day in my commitment
+write chinese comments
+a place to see all done tasks
+a place to show the detail of a task
+extract data from database
+build a restful using python flask
+using dropdown menu to show the whole commit and user can switch between them
+take the lecture 8 of nlp stanford cs224n
+read the text classification github
+implement a cnn for text classification in tensorflow
+think more clear about the privacy scheme
+when you just have limited items in processing, scan the newest postponed item to today
+finish a debug document about your application
+read sth about mbti
+mbt> read sth about mbti
+java use tensorflow model trained in python
+product_ideasrecord every possible good ideaswe dont build our own qa system, but throw those problems we can not solve to quora or stackoverflow
+using stem to decrease the vocabulary size
+add user setting
+finish the word to index mapping in java
+how to use tf vocab processor in java
